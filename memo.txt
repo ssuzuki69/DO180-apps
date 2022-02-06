@@ -6,7 +6,7 @@ apps.ap46.prod.nextcle.com
 token:
 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
 0206
-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
+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
 
 source /usr/local/etc/ocp4.config
 oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
