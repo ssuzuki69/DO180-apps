@@ -26,3 +26,8 @@ oc new-project ${RHT_OCP4_DEV_USER}-nodejs
 oc start-build bc/nodejs-hello
 
 podman logs -f troubleshoot-container
+
+oc new-app --name nodejs-dev \
+ https://github.com/${RHT_OCP4_GITHUB_USER}/DO180-apps#troubleshoot-review \
+ -i nodejs:12 --context-dir=nodejs-app --build-env \
+ npm_config_registry=http://${RHT_OCP4_NEXUS_SERVER}/repository/npm-proxy
