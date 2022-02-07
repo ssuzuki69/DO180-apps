@@ -10,6 +10,7 @@ RUN yum install -y java-1.8.0-openjdk-devel && \
 
 RUN groupadd -r nexus -f -g 1001 && \
     useradd -u 1001 -r -g nexus -m -d ${NEXUS_HOME} -s /sbin/nologin \
+          -c "Nexus user" nexus &&\
     chown -R nexus:nexus ${NEXUS_HOME} && \
     chomod -R 755 ${NEXUS_HOME}
 
