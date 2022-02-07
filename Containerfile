@@ -1,6 +1,6 @@
 # DO180 comprehensive-review
 FROM ubi8/ubi:8.3
-ARG NEXUS_VERSION=3.18.1
+ARG NEXUS_VERSION=2.14.3-02
 LABEL description="This is a DO180 comprehensive-review container image"
 MAINTAINER S Suzuki <jdoe@xyz.com>
 RUN yum install -y java-1.8.0-openjdk-devel
