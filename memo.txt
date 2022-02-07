@@ -18,6 +18,7 @@ podman login registry.redhat.io
 
 podman login quay.io -u ${RHT_OCP4_QUAY_USER}
 
+# tag & push
 podman tag do180-mysql-80-rhel8 quay.io/${RHT_OCP4_QUAY_USER}/do180-mysql-80-rhel8
 podman push do180-mysql-80-rhel8 quay.io/${RHT_OCP4_QUAY_USER}/do180-mysql-80-rhel8
 
