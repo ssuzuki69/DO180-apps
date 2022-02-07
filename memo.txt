@@ -2,6 +2,9 @@
 http://todoapi-fntskp-application.apps.ap46.prod.nextcle.com/todo/
 
 apps.ap46.prod.nextcle.com
+oc logs <podName> [-c <containerName>]
+podman run -d --name official-httpd -p 8180:80 quay.io/redhattraining/httpd-parent
+podman exec -it official-httpd /bin/bash
 
 token:
 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
