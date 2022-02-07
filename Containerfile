@@ -1,8 +1,9 @@
 # DO180 comprehensive-review
 FROM ubi8/ubi:8.3
-LABEL description="This is a custom httpd container image"
+ARG NEXUS_VERSION=3.18.1
+LABEL description="This is a DO180 comprehensive-review container image"
 MAINTAINER S Suzuki <jdoe@xyz.com>
-RUN yum install -y httpd
+RUN yum install -y java-1.8.0-openjdk-devel
 EXPOSE 80
 ENV LogLevel "info"
 ADD http://someserver.com/filename.pdf /var/www/html
