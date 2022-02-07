@@ -1,13 +1,26 @@
 # DO180 comprehensive-review
 FROM ubi8/ubi:8.3
-ARG NEXUS_VERSION=2.14.3-02
-LABEL description="This is a DO180 comprehensive-review container image"
 MAINTAINER S Suzuki <jdoe@xyz.com>
-RUN yum install -y java-1.8.0-openjdk-devel
-EXPOSE 80
-ENV LogLevel "info"
-ADD http://someserver.com/filename.pdf /var/www/html
-COPY ./src/ /var/www/html/
-USER apache
-ENTRYPOINT ["/usr/sbin/httpd"]
-CMD ["-D", "FOREGROUND"] 
+
+ARG NEXUS_VERSION=2.14.3-02
+ENV NEXUS_HOME=/opt/nexus
+
+RUN yum install -y java-1.8.0-openjdk-devel && \
+    yum -y clean all
+
+RUN groupadd -r nexus -f -g 1001 && \
+    useradd -u 1001 -r -g nexus -m -d ${NEXUS_HOME} -s /sbin/nologin \
+    chown -R nexus:nexus ${NEXUS_HOME} && \
+    chomod -R 755 ${NEXUS_HOME}
+
+USER nexus
+
+ADD nexus-${NEXUS_VERSION}-bundle.tar.gz ${NEXUS_HOME}
+ADD nexus-start.sh ${NEXUS_HOME}/
+
+RUN ln -s ${NEXUS_HOME}/nexus-${NEXUS_VERSION} \
+          ${NEXUS_HOME}/nexus2
+
+WORKDIR ${NEXUS_HOME}
+VOLUME ["/opt/nexus/sonatype-work"]
+CMD ["sh", "nexus-start.sh"] 
