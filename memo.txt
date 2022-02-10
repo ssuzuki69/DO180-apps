@@ -42,7 +42,7 @@ git commit -am "Fixed Express release"
 git push
 oc start-build bc/nodejs-hello
 
-#### DO180 Labs9 ######
+#### DO180 Lab9 ######
 podman build --layers=false -t nexus .
 cd /home/student/DO180/labs/comprehensive-review
 cd deploy/local
