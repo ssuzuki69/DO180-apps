@@ -42,3 +42,20 @@ git commit -am "Fixed Express release"
 git push
 oc start-build bc/nodejs-hello
 
+#### DO180 Labs9 ######
+podman build --layers=false -t nexus .
+cd /home/student/DO180/labs/comprehensive-review
+cd deploy/local
+./run-persistent.sh
+podman rm -f inspiring_poincare
+podman login -u ${RHT_OCP4_QUAY_USER} quay.io
+podman push localhost/nexus:latest quay.io/${RHT_OCP4_QUAY_USER}/nexus:latest
+cd ~/DO180/labs/comprehensive-review/deploy/openshift
+oc login -u ${RHT_OCP4_DEV_USER}> -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+oc new-project ${RHT_OCP4_DEV_USER}-review
+
+export RHT_OCP4_QUAY_USER
+envsubst < resources/nexus-deployment.yaml > | oc create -f -
+oc get pods
+oc expose svc/nexus
+oc get route -o yaml
