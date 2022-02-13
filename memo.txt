@@ -13,19 +13,15 @@ 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
 
 source /usr/local/etc/ocp4.config
 oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
-oc login -u kubeadmin -p ${RHT_OCP4_KUBEADM_PASSWD} https://api.ocp4.example.com:6443
 oc new-project ${RHT_OCP4_DEV_USER}-application
 podman login registry.redhat.io
-
 podman login quay.io -u ${RHT_OCP4_QUAY_USER}
-
 
 # build & tag & push
 podman build --layers=false -t do180/apache .
 podman tag do180-mysql-80-rhel8 quay.io/${RHT_OCP4_QUAY_USER}/do180-mysql-80-rhel8
 podman push do180-mysql-80-rhel8 quay.io/${RHT_OCP4_QUAY_USER}/do180-mysql-80-rhel8
 
-oc get pod -n openshift-image-registry
 oc process -f quote-php-template.json -p RHT_OCP4_QUAY_USER=${RHT_OCP4_QUAY_USER} | oc create -f -
 oc expose service quote-php
 
@@ -60,3 +56,23 @@ envsubst < resources/nexus-deployment.yaml > | oc create -f -
 oc get pods
 oc expose svc/nexus
 oc get route -o yaml
+
+##### DO280 ######
+oc login -u kubeadmin -p ${RHT_OCP4_KUBEADM_PASSWD} https://api.ocp4.example.com:6443
+# Operator Podのログ追跡
+oc get pod -n openshift-image-registry
+oc logs --tail 3 -n openshift-image-registry cluster-image-registry-operator-564bd5dd8f-s46bz
+
+# Kubeletのログ追跡
+oc adm node-logs --tail 1 -u kubelet master01
+systemctl status kubelet
+
+# openvswitch Pod が実⾏されていることを確認
+crictl ps --name openvswitch
+oc get events
+
+skopeo inspect docker://registry.redhat.io/rhel8/postgresq-13:1
+
+
+
+
