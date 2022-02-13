@@ -25,7 +25,7 @@ podman build --layers=false -t do180/apache .
 podman tag do180-mysql-80-rhel8 quay.io/${RHT_OCP4_QUAY_USER}/do180-mysql-80-rhel8
 podman push do180-mysql-80-rhel8 quay.io/${RHT_OCP4_QUAY_USER}/do180-mysql-80-rhel8
 
-
+oc get pod -n openshift-image-registry
 oc process -f quote-php-template.json -p RHT_OCP4_QUAY_USER=${RHT_OCP4_QUAY_USER} | oc create -f -
 oc expose service quote-php
 
