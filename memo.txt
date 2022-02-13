@@ -1,4 +1,5 @@
 
+git clone https://github.com/ssuzuki69/DO180-apps
 http://todoapi-fntskp-application.apps.ap46.prod.nextcle.com/todo/
 
 apps.ap46.prod.nextcle.com
