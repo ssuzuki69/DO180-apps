@@ -13,6 +13,7 @@ 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
 
 source /usr/local/etc/ocp4.config
 oc login -u ${RHT_OCP4_DEV_USER} -p ${RHT_OCP4_DEV_PASSWORD} ${RHT_OCP4_MASTER_API}
+oc login -u kubeadmin -p ${RHT_OCP4_KUBEADM_PASSWD} https://api.ocp4.example.com:6443
 oc new-project ${RHT_OCP4_DEV_USER}-application
 podman login registry.redhat.io
 
